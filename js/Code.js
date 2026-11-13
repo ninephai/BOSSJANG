@@ -1,11 +1,59 @@
 // อ้างอิง : https://www.youtube.com/@Pormodtanoy/videos / tanong.edu
 
-function doGet() {
-  return HtmlService.createTemplateFromFile('index')
-    .evaluate()
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+// ลบ doGet เดิมที่ return HtmlService ออก และใช้ตัวนี้แทน
+function doGet(e) {
+  // รับ Request แบบ GET (เช่น การดึงข้อมูล)
+  const action = e.parameter.action;
+  
+  try {
+    if (action === 'getAllItems') {
+      const data = getAllItems();
+      return createJsonResponse({ status: 'success', data: data });
+    }
+    // เพิ่ม action อื่นๆ ตามต้องการ เช่น getItemById
+    
+    return createJsonResponse({ status: 'error', message: 'Action not found' });
+  } catch (error) {
+    return createJsonResponse({ status: 'error', message: error.toString() });
+  }
 }
+
+// เพิ่ม doPost สำหรับรับ Request ที่มีการส่งข้อมูลมา (เช่น บันทึก, แก้ไข, ลบ)
+function doPost(e) {
+  try {
+    const payload = JSON.parse(e.postData.contents);
+    const action = payload.action;
+
+    if (action === 'save') {
+      const result = saveToSpreadsheet(payload.item);
+      return createJsonResponse({ status: 'success', data: result });
+    } 
+    else if (action === 'update') {
+      const result = updateItem(payload.item);
+      return createJsonResponse({ status: 'success', data: result });
+    }
+    else if (action === 'delete') {
+      const result = deleteItemFromSheet(payload.id);
+      return createJsonResponse({ status: 'success', data: result });
+    }
+    else if (action === 'updateStatus') {
+      const result = updateItemStatus(payload.id, payload.checked);
+      return createJsonResponse({ status: 'success', data: result });
+    }
+
+    return createJsonResponse({ status: 'error', message: 'Action not found' });
+  } catch (error) {
+    return createJsonResponse({ status: 'error', message: error.toString() });
+  }
+}
+
+// ฟังก์ชันช่วยเหลือสำหรับสร้าง JSON Response พร้อมเปิด CORS ให้ GitHub ดึงไปใช้ได้
+function createJsonResponse(responseObject) {
+  return ContentService.createTextOutput(JSON.stringify(responseObject))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ส่วนฟังก์ชันอื่นๆ (saveToSpreadsheet, getAllItems, uploadFile ฯลฯ) คงไว้เหมือนเดิมได้เลย
 
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename).getContent();
