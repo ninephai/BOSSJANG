@@ -107,12 +107,12 @@
     }
 
     .app-logo img {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%; /* ปรับเป็น 50% เพื่อให้เป็นวงกลม */
       object-fit: cover;
       box-shadow: var(--shadow-sm);
-      border: 3px solid var(--primary-light);
+      border: 2px solid var(--primary-light);
       padding: 2px;
       background-color: white;
       transition: var(--transition);
@@ -141,6 +141,7 @@
       font-size: 16px;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
     }
@@ -162,15 +163,6 @@
 
     .glass-card:hover {
       box-shadow: var(--shadow-lg);
-    }
-
-    .table-container-card {
-      min-height: 600px;
-      padding: 0;
-    }
-    
-    .table-wrapper {
-      padding: 32px;
     }
 
     .section-title {
@@ -276,6 +268,7 @@
       border-radius: var(--radius-md);
       border: 1px dashed #CBD5E1;
       transition: var(--transition);
+      overflow: hidden;
     }
     
     .file-upload-wrapper:hover {
@@ -309,10 +302,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      flex-grow: 1;
+      max-width: 100%;
     }
 
-    /* --- Custom Datepicker --- */
+    /* --- Custom Datepicker (Modern Look) --- */
     .ui-widget.ui-widget-content {
       border: none !important;
       font-family: 'Kanit', sans-serif;
@@ -359,6 +352,7 @@
       font-weight: 600 !important;
       box-shadow: var(--shadow-md);
     }
+    /* จุดแจ้งเตือนวันที่มีภารกิจ */
     .ui-datepicker td.has-data a {
       position: relative;
       font-weight: 700 !important;
@@ -424,6 +418,7 @@
 
     .task-desc {
       min-width: 200px;
+      max-width: 350px;
       line-height: 1.6;
       font-weight: 500;
     }
@@ -519,6 +514,16 @@
       color: var(--primary) !important;
     }
 
+    /* --- Mobile Responsive Rules --- */
+    @media (max-width: 992px) {
+      .app-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      .app-logo { flex-direction: column; gap: 12px; }
+    }
+
     /* Mobile Table Expand Logic */
     .dtr-control {
       cursor: pointer;
@@ -540,36 +545,26 @@
       background: var(--text-main);
     }
 
-    /* --- Responsive Rules --- */
-    @media (max-width: 992px) {
-      .app-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
-        padding: 24px;
-      }
-      .app-logo { flex-direction: column; gap: 12px; }
-    }
-
+    /* เพิ่มและปรับปรุง CSS สำหรับหน้าจอมือถือ (<= 768px) */
     @media (max-width: 768px) {
-      .app-container { padding: 16px 12px; }
-      .app-header { padding: 20px 16px; margin-bottom: 24px; }
-      .app-logo img { width: 60px; height: 60px; }
-      .app-title { font-size: 22px; }
+      .app-container { padding: 12px 16px; }
+      .app-header { padding: 20px; }
+      .app-logo img { width: 56px; height: 56px; }
+      .app-title { font-size: 20px; }
       
-      .glass-card { padding: 20px; margin-bottom: 16px; }
-      .table-wrapper { padding: 16px; }
-      .table-container-card { min-height: auto; }
+      .task-counter { width: 100%; } /* ให้ปุ่มนับจำนวนขยายเต็มที่จัดวางได้สวยขึ้นบนมือถือ */
       
-      .row > .col-6 { width: 100%; margin-bottom: 12px; }
-      .row > .col-6:last-child { margin-bottom: 0; }
+      .glass-card { padding: 20px; } /* ลด Padding ของ Card บนมือถือ */
       
+      /* ซ่อนคอลัมน์ในมือถือ ให้เหลือแค่วันที่/เวลา และปุ่มกดดู */
       .table thead th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)),
       .table tbody td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
         display: none !important;
       }
+      
       .table thead th:nth-child(1), .table tbody td:nth-child(1) { display: table-cell !important; }
       
+      /* Child Row Styling (Mobile Detail Card) */
       .child-card {
         background: #F8FAFC;
         border-radius: var(--radius-md);
@@ -607,12 +602,6 @@
         padding-top: 16px;
         border-top: 1px solid var(--border-color);
       }
-      
-      .dataTables_wrapper .dataTables_filter input {
-         margin-left: 0;
-         width: 100%;
-         margin-top: 8px;
-      }
     }
     
     @media (min-width: 769px) {
@@ -639,6 +628,12 @@
       background: #F8FAFC;
       border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     }
+    
+    /* Responsive tweaks for Modal */
+    @media (max-width: 768px) {
+      .modal-header, .modal-footer { padding: 16px 20px; }
+      .modal-body { padding: 20px; }
+    }
 
     /* Loader */
     .loading-overlay {
@@ -663,10 +658,10 @@
     <!-- Header -->
     <header class="app-header">
       <div class="app-logo">
-        <img src="https://img1.pic.in.th/images/LINE_ALBUM__261110_1.jpg" alt="Logo">
+        <img src="https://img2.pic.in.th/715181193_27667857169472854_6211067307914977205_n.jpg" alt="Logo">
         <div>
           <h1 class="app-title">ภารกิจรายวัน TO DO LIST</h1>
-          <span class="text-muted" style="font-size: 15px; font-weight: 500;">(ท่านรองปลัดเทศบาล)</span>
+          <span class="text-muted" style="font-size: 15px; font-weight: 500;">(รองปลัดเทศบาล)</span>
         </div>
       </div>
       <div class="task-counter">
@@ -676,7 +671,7 @@
 
     <div class="row g-4">
       
-      <!-- Left Sidebar -->
+      <!-- Left Sidebar (Form & Calendar) -->
       <div class="col-xl-4 col-lg-5">
         
         <!-- Form Add Task -->
@@ -684,13 +679,14 @@
           <h3 class="section-title"><i class="bi bi-plus-lg"></i> เพิ่มภารกิจใหม่</h3>
           
           <div class="row">
-            <div class="col-6">
+            <!-- เปลี่ยนคลาสกริดเป็น col-12 col-sm-6 เพื่อให้ซ้อนกันบนจอมือถือขนาดเล็ก -->
+            <div class="col-12 col-sm-6">
               <div class="form-group">
                 <label class="form-label">วันที่</label>
                 <input id="todo-date" type="date" class="form-control" />
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-sm-6">
               <div class="form-group">
                 <label class="form-label">เวลา</label>
                 <input id="todo-time" type="time" class="form-control" />
@@ -736,9 +732,9 @@
         </div>
       </div>
 
-      <!-- Right Main -->
+      <!-- Right Main (Table) -->
       <div class="col-xl-8 col-lg-7">
-        <div class="glass-card table-container-card position-relative">
+        <div class="glass-card position-relative" style="min-height: 600px; padding: 0;">
           
           <!-- Loader -->
           <div class="loading-overlay" id="loading-spinner">
@@ -746,7 +742,8 @@
             <p class="mt-4 text-muted fw-semibold" style="font-size: 16px;">กำลังโหลดข้อมูล...</p>
           </div>
 
-          <div class="table-responsive table-wrapper">
+          <!-- ใช้ p-3 p-md-4 เพื่อให้ padding รอบตารางบนมือถือดูพอดีขึ้น -->
+          <div class="table-responsive p-3 p-md-4">
             <table class="table" id="todoTable">
               <thead>
                 <tr>
@@ -782,13 +779,14 @@
           <form id="editForm">
             <input type="hidden" id="edit-id">
             <div class="row">
-              <div class="col-6">
+              <!-- เปลี่ยนคลาสกริดเช่นเดียวกัน -->
+              <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label class="form-label">วันที่</label>
                   <input type="date" class="form-control" id="edit-date" required>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-sm-6">
                 <div class="form-group">
                   <label class="form-label">เวลา</label>
                   <input type="time" class="form-control" id="edit-time" required>
@@ -826,16 +824,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script>
-    // ========================================================
-    // กำหนด URL ของ Google Apps Script ที่ได้รับจากการ Deploy
-    // ========================================================
-    const API_URL = "https://script.google.com/macros/s/AKfycbym4zgDnLc_QO4p9DcmeZ9Ahng2nEQs4pmo-3aNBFpl1w1FqPQruN_KI5tVpGVGLNUyVA/exec"; // <--- นำลิงก์ของคุณมาวางตรงนี้ หรือลิงก์ Cloudflare Worker API Gateway
-
     // Variables
-    let masterData = []; 
-    let currentData = []; 
+    let currentData = [];
     let dataTable = null;
     let currentFilterDate = null;
 
@@ -878,17 +869,26 @@
         `;
     }
 
-   // Initialize Calendar
+   // Initialize Calendar (ตั้งค่าภาษาไทย)
     $(function() {
         $.datepicker.regional['th'] = {
-            closeText: 'ปิด', prevText: 'ย้อน', nextText: 'ถัดไป', currentText: 'วันนี้',
-            monthNames: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
-            monthNamesShort: ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'],
+            closeText: 'ปิด',
+            prevText: 'ย้อน',
+            nextText: 'ถัดไป',
+            currentText: 'วันนี้',
+            monthNames: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน',
+            'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+            monthNamesShort: ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.',
+            'ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'],
             dayNames: ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'],
             dayNamesShort: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
             dayNamesMin: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
-            weekHeader: 'Wk', dateFormat: 'yy-mm-dd', firstDay: 0,
-            isRTL: false, showMonthAfterYear: false, yearSuffix: ''
+            weekHeader: 'Wk',
+            dateFormat: 'yy-mm-dd',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
         };
         $.datepicker.setDefaults($.datepicker.regional['th']);
 
@@ -897,7 +897,7 @@
             onSelect: function(dateText) { filterByDate(dateText); },
             beforeShowDay: function(date) {
                 const dateString = $.datepicker.formatDate('yy-mm-dd', date);
-                const hasData = masterData.some(item => item.date === dateString);
+                const hasData = currentData.some(item => item.date === dateString);
                 return [true, hasData ? 'has-data' : '', ''];
             }
         });
@@ -919,49 +919,51 @@
     }
 
     // Load Data
-    async function loadDataFromSpreadsheet() {
+    function loadDataFromSpreadsheet() {
         showLoading();
         currentFilterDate = null; 
         try {
-            // เพิ่ม redirect: 'follow' เพื่อรองรับการเปลี่ยนเส้นทางของ Google Apps Script
-            const response = await fetch(`${API_URL}?action=getAllItems`, { 
-                method: "GET", 
-                redirect: "follow" 
-            });
-            const result = await response.json();
-            
-            if (result.status === 'success') {
-                masterData = result.data || [];
-                currentData = [...masterData];
-                renderTableWithData(currentData);
-                updateCalendarWithData();
-            } else {
-                Swal.fire('ข้อผิดพลาด', result.message, 'error');
-                useSampleData();
-            }
+            google.script.run
+                .withSuccessHandler(function(items) {
+                    currentData = items || [];
+                    renderTableWithData(currentData);
+                    updateCalendarWithData();
+                    hideLoading();
+                })
+                .withFailureHandler(function(error) {
+                    hideLoading();
+                    handleError(error);
+                })
+                .getAllItems();
         } catch (e) {
-            useSampleData(); 
-        } finally {
             hideLoading();
+            useSampleData(); 
         }
     }
 
     function filterByDate(date) {
         currentFilterDate = date;
-        const filtered = masterData.filter(item => item.date === date);
-        currentData = filtered;
-        renderTableWithData(filtered);
-    }
-    
-    function renderTable() { 
-        currentFilterDate = null;
-        currentData = [...masterData];
-        renderTableWithData(masterData); 
+        showLoading();
+        try {
+            google.script.run
+                .withSuccessHandler(function(items) {
+                    currentData = items || [];
+                    renderTableWithData(currentData);
+                    hideLoading();
+                })
+                .withFailureHandler(function(error) {
+                    hideLoading(); handleError(error);
+                })
+                .getItemsByDate(date);
+        } catch (e) {
+            hideLoading();
+            const filtered = currentData.filter(item => item.date === date);
+            renderTableWithData(filtered);
+        }
     }
 
     // Utils
     function formatThaiDate(dateStr) {
-        if (!dateStr) return "-";
         const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
         const date = new Date(dateStr);
         return `${date.getDate()} ${months[date.getMonth()]} ${(date.getFullYear() + 543).toString().substr(2,2)}`;
@@ -972,6 +974,7 @@
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
+        
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
         
@@ -1068,7 +1071,7 @@
 
     // API Actions 
     function toggleStatus(id, newStatus) {
-        const item = masterData.find(i => i.id === id);
+        const item = currentData.find(i => i.id === id);
         if (!item) return;
 
         if (item.checked && !newStatus) {
@@ -1089,26 +1092,22 @@
         }
     }
 
-    async function execUpdateStatus(id, newStatus) {
+    function execUpdateStatus(id, newStatus) {
         try {
-            let localItem = masterData.find(i => i.id === id);
-            if (localItem) localItem.checked = newStatus;
-            renderTableWithData(currentData);
-
-            // ปรับ Headers หลีกเลี่ยง CORS Preflight บน GitHub Pages
-            await fetch(API_URL, {
-                method: "POST",
-                redirect: "follow",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "updateStatus", id: id, checked: newStatus })
-            });
+            google.script.run
+                .withSuccessHandler(() => {
+                    const idx = currentData.findIndex(i => i.id === id);
+                    if (idx !== -1) currentData[idx].checked = newStatus;
+                    renderTableWithData(currentData);
+                }).updateItemStatus(id, newStatus);
         } catch(e) { 
-            console.error(e);
-            loadDataFromSpreadsheet(); 
+            const idx = currentData.findIndex(i => i.id === id);
+            if (idx !== -1) currentData[idx].checked = newStatus;
+            renderTableWithData(currentData);
         }
     }
 
-    async function addItem() {
+    function addItem() {
         const name = document.getElementById('todo-name').value.trim();
         const date = document.getElementById('todo-date').value;
         const time = document.getElementById('todo-time').value;
@@ -1137,36 +1136,25 @@
         }
     }
 
-    async function saveToAppScript(item) {
+    function saveToAppScript(item) {
         try {
-            // ปรับ Headers หลีกเลี่ยง CORS Preflight
-            const response = await fetch(API_URL, {
-                method: "POST",
-                redirect: "follow",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "saveItem", item: item })
-            });
-            const result = await response.json();
-
-            if (result.status === "success") {
-                document.getElementById('todo-name').value = '';
-                document.getElementById('todo-file').value = '';
-                document.getElementById('file-name').textContent = 'ยังไม่ได้เลือกไฟล์';
-                Swal.fire({icon: 'success', title: 'บันทึกสำเร็จ', showConfirmButton: false, timer: 1500});
-                
-                await loadDataFromSpreadsheet(); 
-                if (currentFilterDate) filterByDate(currentFilterDate);
-            } else {
-                Swal.fire('ข้อผิดพลาด', result.message, 'error');
-            }
+            google.script.run
+                .withSuccessHandler((res) => {
+                    document.getElementById('todo-name').value = '';
+                    document.getElementById('todo-file').value = '';
+                    document.getElementById('file-name').textContent = 'ยังไม่ได้เลือกไฟล์';
+                    Swal.fire({icon: 'success', title: 'บันทึกสำเร็จ', showConfirmButton: false, timer: 1500});
+                    filterByDate(res.date); 
+                })
+                .saveToSpreadsheet(item);
         } catch(e) {
-            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้', 'error');
+            Swal.close(); 
         }
     }
 
     // Modal Edit logic
     function openEditModal(id) {
-        const item = masterData.find(i => i.id === id);
+        const item = currentData.find(i => i.id === id);
         if(!item) return;
         document.getElementById('edit-id').value = item.id;
         document.getElementById('edit-date').value = item.date;
@@ -1177,9 +1165,9 @@
         new bootstrap.Modal(document.getElementById('editModal')).show();
     }
 
-    async function saveModalItem() {
+    function saveModalItem() {
         const id = document.getElementById('edit-id').value;
-        const org = masterData.find(i => i.id === id);
+        const org = currentData.find(i => i.id === id);
         const item = {
             id,
             date: document.getElementById('edit-date').value,
@@ -1207,58 +1195,31 @@
         }
     }
 
-    async function updateToAppScript(item) {
+    function updateToAppScript(item) {
         try {
-            // ปรับ Headers หลีกเลี่ยง CORS Preflight
-            const response = await fetch(API_URL, {
-                method: "POST",
-                redirect: "follow",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "updateItem", item: item })
-            });
-            const result = await response.json();
-
-            if (result.status === "success") {
-                bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
-                Swal.fire({icon: 'success', title: 'อัพเดทสำเร็จ', timer: 1500, showConfirmButton: false});
-                
-                await loadDataFromSpreadsheet();
-                if (currentFilterDate) filterByDate(currentFilterDate);
-            } else {
-                Swal.fire('ข้อผิดพลาด', result.message, 'error');
-            }
-        } catch(e) { 
-            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้', 'error');
-        }
+            google.script.run
+                .withSuccessHandler((res) => {
+                    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+                    Swal.fire({icon: 'success', title: 'อัพเดทสำเร็จ', timer: 1500, showConfirmButton: false});
+                    filterByDate(res.date);
+                }).updateItem(item);
+        } catch(e) { Swal.close(); }
     }
 
     function deleteItem(id) {
         Swal.fire({
             title: 'ยืนยันการลบ?', text: "ข้อมูลนี้จะถูกลบและไม่สามารถกู้คืนได้",
             icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'ลบข้อมูล'
-        }).then(async (res) => {
+        }).then((res) => {
             if (res.isConfirmed) {
                 Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() });
                 try {
-                    // ปรับ Headers หลีกเลี่ยง CORS Preflight
-                    const response = await fetch(API_URL, {
-                        method: "POST",
-                        redirect: "follow",
-                        headers: { "Content-Type": "text/plain;charset=utf-8" },
-                        body: JSON.stringify({ action: "deleteItem", id: id })
-                    });
-                    const result = await response.json();
-
-                    if (result.status === "success") {
+                    google.script.run.withSuccessHandler(() => {
                         Swal.fire({icon:'success', title:'ลบเรียบร้อย', timer: 1500, showConfirmButton: false});
-                        await loadDataFromSpreadsheet();
                         if (currentFilterDate) filterByDate(currentFilterDate);
-                    } else {
-                        Swal.fire('ข้อผิดพลาด', result.message, 'error');
-                    }
-                } catch(e) { 
-                    Swal.fire('ข้อผิดพลาด', 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้', 'error'); 
-                }
+                        else loadDataFromSpreadsheet();
+                    }).deleteItemFromSheet(id);
+                } catch(e) { Swal.close(); }
             }
         });
     }
@@ -1272,14 +1233,14 @@
         const file = document.getElementById('edit-file').files[0];
         document.getElementById('edit-file-name').textContent = file ? file.name : 'ไม่มีไฟล์';
     }
+    function renderTable() { loadDataFromSpreadsheet(); }
 
     // Init Data fallback
     function useSampleData() {
-        masterData = [
-            { id: "1", date: new Date().toISOString().split('T')[0], time: "09:30", name: "ประชุมติดตามความก้าวหน้า (ข้อมูลตัวอย่าง)", checked: false, priority: "สูง", note: "" },
-            { id: "2", date: new Date().toISOString().split('T')[0], time: "13:00", name: "ตรวจเยี่ยมชุมชนพื้นที่เขต 1 (ข้อมูลตัวอย่าง)", checked: true, priority: "กลาง", note: "" }
+        currentData = [
+            { id: "1", date: new Date().toISOString().split('T')[0], time: "09:30", name: "ประชุมติดตามความก้าวหน้าโครงการประจำเดือน", checked: false, priority: "สูง", note: "#" },
+            { id: "2", date: new Date().toISOString().split('T')[0], time: "13:00", name: "ตรวจเยี่ยมชุมชนพื้นที่เขต 1", checked: true, priority: "กลาง", note: "" }
         ];
-        currentData = [...masterData];
         renderTableWithData(currentData);
         updateCalendarWithData();
     }
@@ -1289,6 +1250,428 @@
         setCurrentDate();
         loadDataFromSpreadsheet();
     });
+
+    <!-- วาง CSS และ HTML เดิมทั้งหมดของคุณไว้ด้านบน -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ==========================================
+    // ตั้งค่า URL ของ API (นำ Web App URL มาใส่ที่นี่)
+    // ==========================================
+    const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+
+    // Variables
+    let currentData = [];
+    let dataTable = null;
+    let currentFilterDate = null;
+
+    // ฟังก์ชันสื่อสารกับ Google Apps Script
+    async function callApi(action, data = {}) {
+        if (API_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
+            throw new Error("กรุณาใส่ Web App URL ที่ตัวแปร API_URL");
+        }
+        
+        try {
+            // ใช้ text/plain เพื่อแก้ปัญหา CORS Preflight ของ GAS
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: action, ...data })
+            });
+            
+            const result = await response.json();
+            if (result.status === 'success') {
+                return result.data;
+            } else {
+                throw new Error(result.message);
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+            throw error;
+        }
+    }
+
+    // ==========================================
+    // UI Helpers & Templates (คงเดิม)
+    // ==========================================
+    function createChildRowContent(item) {
+        return `
+            <div class="child-card">
+                <div class="child-item">
+                    <span class="child-label">ภาระงาน:</span>
+                    <span class="child-value text-start">${item.name}</span>
+                </div>
+                <div class="child-item">
+                    <span class="child-label">สถานะ:</span>
+                    <span class="child-value">
+                        <span class="badge-custom ${item.checked ? 'status-yes' : 'status-no'}" 
+                              onclick="toggleStatus('${item.id}', ${!item.checked})">
+                            ${item.checked ? '<i class="bi bi-check-circle-fill me-1"></i> ดำเนินการแล้ว' : 'รอดำเนินการ'}
+                        </span>
+                    </span>
+                </div>
+                <div class="child-item">
+                    <span class="child-label">ความสำคัญ:</span>
+                    <span class="child-value">
+                        <span class="badge-custom prio-${getPriorityClass(item.priority)}">
+                            ${item.priority}
+                        </span>
+                    </span>
+                </div>
+                <div class="child-item">
+                    <span class="child-label">ไฟล์แนบ:</span>
+                    <span class="child-value">
+                        ${item.note ? `<a href="${item.note}" target="_blank" class="btn-action btn-file active"><i class="bi bi-box-arrow-up-right"></i></a>` : '-'}
+                    </span>
+                </div>
+                <div class="child-actions">
+                    <a href="#" class="btn-action btn-edit" onclick="openEditModal('${item.id}')"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="#" class="btn-action btn-delete" onclick="deleteItem('${item.id}')"><i class="bi bi-trash3-fill"></i></a>
+                </div>
+            </div>
+        `;
+    }
+
+    // Initialize Calendar (ตั้งค่าภาษาไทย)
+    $(function() {
+        $.datepicker.regional['th'] = {
+            closeText: 'ปิด', prevText: 'ย้อน', nextText: 'ถัดไป', currentText: 'วันนี้',
+            monthNames: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน', 'กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+            monthNamesShort: ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.', 'ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'],
+            dayNames: ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'],
+            dayNamesShort: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
+            dayNamesMin: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'],
+            weekHeader: 'Wk', dateFormat: 'yy-mm-dd', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['th']);
+
+        $("#calendar-filter").datepicker({
+            dateFormat: 'yy-mm-dd',
+            onSelect: function(dateText) { filterByDate(dateText); },
+            beforeShowDay: function(date) {
+                const dateString = $.datepicker.formatDate('yy-mm-dd', date);
+                const hasData = currentData.some(item => item.date === dateString);
+                return [true, hasData ? 'has-data' : '', ''];
+            }
+        });
+    });
+
+    function updateCalendarWithData() {
+        setTimeout(() => { $("#calendar-filter").datepicker("refresh"); }, 100);
+    }
+
+    function showLoading() {
+        document.getElementById('loading-spinner').style.display = 'flex';
+        $('#todoTable').css('opacity', '0.3');
+    }
+
+    function hideLoading() {
+        document.getElementById('loading-spinner').style.display = 'none';
+        $('#todoTable').css('opacity', '1');
+    }
+
+    // ==========================================
+    // Fetch Data Methods (แทนที่ google.script.run)
+    // ==========================================
+    async function loadDataFromSpreadsheet() {
+        showLoading();
+        currentFilterDate = null; 
+        try {
+            const items = await callApi('getAllItems');
+            currentData = items || [];
+            renderTableWithData(currentData);
+            updateCalendarWithData();
+        } catch (e) {
+            handleError(e);
+            useSampleData(); 
+        } finally {
+            hideLoading();
+        }
+    }
+
+    async function filterByDate(date) {
+        currentFilterDate = date;
+        showLoading();
+        try {
+            const items = await callApi('getItemsByDate', { date: date });
+            currentData = items || [];
+            renderTableWithData(currentData);
+        } catch (e) {
+            handleError(e);
+            const filtered = currentData.filter(item => item.date === date);
+            renderTableWithData(filtered);
+        } finally {
+            hideLoading();
+        }
+    }
+
+    function formatThaiDate(dateStr) {
+        const months = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+        const date = new Date(dateStr);
+        return `${date.getDate()} ${months[date.getMonth()]} ${(date.getFullYear() + 543).toString().substr(2,2)}`;
+    }
+
+    function setCurrentDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        
+        document.getElementById('todo-date').value = `${year}-${month}-${day}`;
+        document.getElementById('todo-time').value = `${hours}:${minutes}`;
+    }
+
+    function getPriorityClass(priority) {
+        return priority === 'สูง' ? 'high' : priority === 'ต่ำ' ? 'low' : 'medium';
+    }
+
+    function renderTableWithData(items) {
+        if (dataTable) dataTable.destroy();
+
+        const tbody = document.querySelector('.todo-items');
+        tbody.innerHTML = '';
+        document.getElementById('task-count').textContent = items.length;
+        
+        items.forEach(item => {
+            const hasFile = item.note && item.note.trim().length > 0;
+            const tr = document.createElement('tr');
+            
+            tr.innerHTML = `
+          <td class="dtr-control"><i class="bi bi-chevron-down"></i></td>
+          <td class="text-nowrap" data-order="${item.date}">${formatThaiDate(item.date)}</td>
+          <td class="text-muted fw-semibold text-nowrap">${item.time}</td>
+          <td><div class="task-desc">${item.name}</div></td>
+          <td class="text-center">
+        <span class="badge-custom ${item.checked ? 'status-yes' : 'status-no'}" onclick="toggleStatus('${item.id}', ${!item.checked})">
+            ${item.checked ? '<i class="bi bi-check-circle-fill me-1"></i> เรียบร้อย' : 'รอทำ'}
+        </span>
+    </td>
+    <td class="text-center">
+        <span class="badge-custom prio-${getPriorityClass(item.priority)}">${item.priority}</span>
+    </td>
+    <td class="text-center">
+        ${hasFile ? `<a href="${item.note}" target="_blank" class="btn-action btn-file active"><i class="bi bi-paperclip"></i></a>` : `<span class="btn-action btn-file"><i class="bi bi-dash"></i></span>`}
+    </td>
+    <td class="text-center text-nowrap">
+        <button class="btn-action btn-edit" onclick="openEditModal('${item.id}')"><i class="bi bi-pencil-fill"></i></button>
+        <button class="btn-action btn-delete" onclick="deleteItem('${item.id}')"><i class="bi bi-trash3-fill"></i></button>
+    </td>
+`;
+            tbody.appendChild(tr);
+        });
+
+        dataTable = $('#todoTable').DataTable({
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "ทั้งหมด"]],
+            language: {
+                search: "", searchPlaceholder: "🔍 ค้นหาภารกิจ...", lengthMenu: "แสดง _MENU_ รายการ",
+                info: "หน้า _PAGE_ จาก _PAGES_", infoEmpty: "ไม่มีข้อมูล", paginate: { previous: "«", next: "»" }, emptyTable: "ยังไม่มีภารกิจในวันนี้"
+            },
+            responsive: false, autoWidth: false, order: [[1, 'desc'], [2, 'desc']],
+            columnDefs: [
+                { targets: 0, orderable: false, width: '40px', className: 'dtr-control' },
+                { targets: [4,5,6,7], orderable: false }
+            ],
+            drawCallback: function() { attachMobileEvents(); }
+        });
+    }
+
+    function attachMobileEvents() {
+        $('#todoTable tbody').off('click', 'td.dtr-control');
+        
+        if (window.innerWidth <= 768) {
+            $('#todoTable tbody').on('click', 'td.dtr-control', function(e) {
+                const tr = $(this).closest('tr');
+                const row = dataTable.row(tr);
+                
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('parent');
+                } else {
+                    const item = currentData[row.index()];
+                    if(item) {
+                        row.child(createChildRowContent(item)).show();
+                        tr.addClass('parent');
+                    }
+                }
+            });
+        }
+    }
+    
+    $(window).resize(() => attachMobileEvents());
+
+    // ==========================================
+    // Data Management Actions
+    // ==========================================
+    function toggleStatus(id, newStatus) {
+        const item = currentData.find(i => i.id === id);
+        if (!item) return;
+
+        if (item.checked && !newStatus) {
+            Swal.fire({
+                title: 'ยืนยันรหัสป้องกัน', input: 'password', inputPlaceholder: 'ใส่รหัส (1234)',
+                showCancelButton: true, confirmButtonText: 'ยืนยัน', cancelButtonText: 'ยกเลิก', confirmButtonColor: '#4F46E5'
+            }).then((res) => {
+                if (res.isConfirmed && res.value === '1234') execUpdateStatus(id, newStatus);
+                else if (res.isConfirmed) Swal.fire('ผิดพลาด', 'รหัสไม่ถูกต้อง', 'error');
+            });
+        } else {
+            execUpdateStatus(id, newStatus);
+        }
+    }
+
+    async function execUpdateStatus(id, newStatus) {
+        try {
+            await callApi('updateItemStatus', { id: id, checked: newStatus });
+            const idx = currentData.findIndex(i => i.id === id);
+            if (idx !== -1) currentData[idx].checked = newStatus;
+            renderTableWithData(currentData);
+        } catch(e) { 
+            console.error(e);
+            Swal.fire('ข้อผิดพลาด', 'ไม่สามารถอัพเดทสถานะได้', 'error');
+        }
+    }
+
+    function addItem() {
+        const name = document.getElementById('todo-name').value.trim();
+        const date = document.getElementById('todo-date').value;
+        const time = document.getElementById('todo-time').value;
+        const priority = document.getElementById('todo-priority').value;
+        const fileInput = document.getElementById('todo-file');
+
+        if (!name || !date || !time) {
+            Swal.fire({icon: 'warning', title: 'กรอกข้อมูลไม่ครบ', text: 'โปรดระบุรายละเอียด วันที่ และเวลา', confirmButtonColor: '#4F46E5'});
+            return;
+        }
+
+        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+        const newItem = { date, time, name, checked: false, priority, note: "", fileData: null, fileName: null };
+
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                newItem.fileData = e.target.result;
+                newItem.fileName = fileInput.files[0].name;
+                saveToAppScript(newItem);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            saveToAppScript(newItem);
+        }
+    }
+
+    async function saveToAppScript(item) {
+        try {
+            const res = await callApi('saveItem', { item: item });
+            document.getElementById('todo-name').value = '';
+            document.getElementById('todo-file').value = '';
+            document.getElementById('file-name').textContent = 'ยังไม่ได้เลือกไฟล์';
+            Swal.fire({icon: 'success', title: 'บันทึกสำเร็จ', showConfirmButton: false, timer: 1500});
+            filterByDate(res.date); 
+        } catch(e) {
+            Swal.fire('ข้อผิดพลาด', e.message, 'error'); 
+        }
+    }
+
+    function openEditModal(id) {
+        const item = currentData.find(i => i.id === id);
+        if(!item) return;
+        document.getElementById('edit-id').value = item.id;
+        document.getElementById('edit-date').value = item.date;
+        document.getElementById('edit-time').value = item.time;
+        document.getElementById('edit-name').value = item.name;
+        document.getElementById('edit-priority').value = item.priority;
+        document.getElementById('edit-file-name').textContent = item.note ? 'มีไฟล์เดิม' : 'ไม่มีไฟล์';
+        new bootstrap.Modal(document.getElementById('editModal')).show();
+    }
+
+    function saveModalItem() {
+        const id = document.getElementById('edit-id').value;
+        const org = currentData.find(i => i.id === id);
+        const item = {
+            id, date: document.getElementById('edit-date').value, time: document.getElementById('edit-time').value,
+            name: document.getElementById('edit-name').value.trim(), priority: document.getElementById('edit-priority').value,
+            checked: org ? org.checked : false, note: org ? org.note : '', fileData: null, fileName: null
+        };
+
+        const fileInput = document.getElementById('edit-file');
+        Swal.fire({ title: 'กำลังอัพเดท...', didOpen: () => Swal.showLoading() });
+
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                item.fileData = e.target.result;
+                item.fileName = fileInput.files[0].name;
+                updateToAppScript(item);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            updateToAppScript(item);
+        }
+    }
+
+    async function updateToAppScript(item) {
+        try {
+            const res = await callApi('updateItem', { item: item });
+            bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+            Swal.fire({icon: 'success', title: 'อัพเดทสำเร็จ', timer: 1500, showConfirmButton: false});
+            filterByDate(res.date);
+        } catch(e) { 
+            Swal.fire('ข้อผิดพลาด', e.message, 'error');
+        }
+    }
+
+    function deleteItem(id) {
+        Swal.fire({
+            title: 'ยืนยันการลบ?', text: "ข้อมูลนี้จะถูกลบและไม่สามารถกู้คืนได้",
+            icon: 'warning', showCancelButton: true, confirmButtonColor: '#EF4444', confirmButtonText: 'ลบข้อมูล'
+        }).then(async (res) => {
+            if (res.isConfirmed) {
+                Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() });
+                try {
+                    await callApi('deleteItemFromSheet', { id: id });
+                    Swal.fire({icon:'success', title:'ลบเรียบร้อย', timer: 1500, showConfirmButton: false});
+                    if (currentFilterDate) filterByDate(currentFilterDate);
+                    else loadDataFromSpreadsheet();
+                } catch(e) { 
+                    Swal.fire('ข้อผิดพลาด', e.message, 'error');
+                }
+            }
+        });
+    }
+
+    function updateFileName() {
+        const file = document.getElementById('todo-file').files[0];
+        document.getElementById('file-name').textContent = file ? file.name : 'ยังไม่ได้เลือกไฟล์';
+    }
+    
+    function updateEditFileName() {
+        const file = document.getElementById('edit-file').files[0];
+        document.getElementById('edit-file-name').textContent = file ? file.name : 'ไม่มีไฟล์';
+    }
+    
+    function renderTable() { loadDataFromSpreadsheet(); }
+
+    function useSampleData() {
+        currentData = [
+            { id: "1", date: new Date().toISOString().split('T')[0], time: "09:30", name: "ประชุมติดตามความก้าวหน้า (ทดสอบ)", checked: false, priority: "สูง", note: "#" }
+        ];
+        renderTableWithData(currentData);
+        updateCalendarWithData();
+    }
+    
+    function handleError(error) {
+        console.error("System Error:", error);
+        Swal.fire({icon: 'error', title: 'การเชื่อมต่อผิดพลาด', text: 'ไม่สามารถโหลดข้อมูลจากเซิร์ฟเวอร์ได้'});
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setCurrentDate();
+        loadDataFromSpreadsheet();
+    });
+
   </script>
 </body>
 </html>
